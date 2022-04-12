@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db01:
+    image: mohamednour95/db_app
+    ports:
+      - "3306:3306"
+    volumes:
+      - appdb:/var/lib/mysql
+  mco1:
+    image: memcached
+    ports:
+      - "11211:11211"
+  rmq01:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  vproapp:
+    image: mohamednour95/web_app
+    ports:
+      - "8081:8080"
+  lb01:
+    image: mohamednour95/lb_app
+    ports:
+      - "80:80"
+volumes:
+  appdb: {}      
